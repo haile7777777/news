@@ -1,11 +1,7 @@
 <template>
   <div class="home-container">
     <!-- 轮播图 start -->
-    <mt-swipe :auto="4000" class="swip">
-      <mt-swipe-item v-for="item in swipList" :key="item.id">
-        <img :src="item.img">
-      </mt-swipe-item>
-    </mt-swipe>
+    <swiper :imgList="swipList" :isfull="true"></swiper>
     <!-- 轮播图 end -->
 
     <!-- 导航 start -->
@@ -15,11 +11,11 @@
           <img src="../../assets/images/menu1.png" alt="">
           <p>新闻资讯</p>
         </router-link>
-        <router-link class="row-item" to=''>
+        <router-link class="row-item" to='/home/imglist'>
           <img src="../../assets/images/menu2.png" alt="">
           <p>新闻资讯</p>
         </router-link>
-        <router-link class="row-item" to=''>
+        <router-link class="row-item" to='/home/goodslist'>
           <img src="../../assets/images/menu3.png" alt="">
           <p>新闻资讯</p>
         </router-link>
@@ -62,6 +58,7 @@
 
 <script>
   import {Toast} from 'mint-ui'
+  import Swiper from '../swiper/swiper'
 
   export default {
     data() {
@@ -71,6 +68,9 @@
     },
     created() {
       this._getSwip();
+    },
+    components:{
+      Swiper
     },
     methods: {
       _getSwip() {
@@ -92,16 +92,6 @@
 
 <style lang="scss" scoped>
   .home-container {
-    .swip {
-      height: 30vh;
-
-      img {
-        display: block;
-        width: 100%;
-        height: 100%;
-      }
-    }
-
     .nav {
       border: 1px solid #eee;
       border-radius: 10px;

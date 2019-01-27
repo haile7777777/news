@@ -1,8 +1,8 @@
 <template>
   <div class="comment-container">
     <h1>发表评论</h1>
-    <textarea placeholder="请输入评论内容" maxlength="120"></textarea>
-    <mt-button type="primary" size="large">发表评论</mt-button>
+    <textarea placeholder="请输入评论内容" maxlength="120" v-model="content"></textarea>
+    <mt-button type="primary" size="large" @click="postComment">发表评论</mt-button>
     <div class="comment" v-for="item in commentList" :key="item.id">
       <div class="comment-header">
         <span class="username">{{item.user_name}}</span>
@@ -19,8 +19,10 @@
 <script>
   export default {
     name: "comment",
+    props: ['id'],
     data() {
       return {
+        content: '',
         pageIndex: 1,
         commentList: []
       }
@@ -35,16 +37,30 @@
           .then(res => {
             if (res.status === 200) {
               this.commentList = this.commentList.concat(res.data.message)
-              console.log(this.commentList)
             }
           })
       },
-      getMore(){
+      getMore() {
         this.pageIndex++
         this._getComment()
+      },
+      postComment() {
+        this.axios
+          .post(`/api/postcomment/${this.id}`, {
+            content: this.content
+          })
+          .then((res) => {
+            if(res.status === 200){
+              let comment = {
+                add_time : new Date(),
+                content:this.content,
+                user_name:'匿名用户'
+              }
+              this.commentList.unshift(comment)
+            }
+          })
       }
     },
-    props: ['id'],
   }
 </script>
 
@@ -62,9 +78,11 @@
     mt-button {
       height: 20px;
     }
-    .comment{
+
+    .comment {
       margin-top: 10px;
-      .comment-header{
+
+      .comment-header {
         height: 16px;
         line-height: 16px;
         font-size: 14px;
@@ -73,7 +91,8 @@
         background-color: #eee;
         color: #333;
       }
-      .comment-body{
+
+      .comment-body {
         border-bottom: 1px dotted #ccc;
         font-size: 14px;
         padding: 10px 0;

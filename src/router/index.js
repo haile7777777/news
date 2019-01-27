@@ -6,6 +6,10 @@ import Cart from '../components/cart/cart'
 import Search from '../components/search/search'
 import NewsList from '../components/news-list/news-list'
 import NewsInfo from '../components/news-info/news-info'
+import ImgList from '../components/img-list/img-list'
+import ImgInfo from '../components/img-info/img-info'
+import GoodsList from '../components/goods-list/goods-list'
+import GoodsInfo from '../components/goods-info/goods-info'
 
 Vue.use(Router)
 
@@ -38,6 +42,23 @@ export default new Router({
     {
       path: '/home/newsinfo/:id',
       component: NewsInfo
+    },
+    {
+      path:'/home/imglist',
+      component: ImgList
+    },
+    {
+      path:'/home/imginfo/:imgid',
+      component: ImgInfo
+    },
+    {
+      path:'/home/goodslist',
+      component: GoodsList
+    },
+    {
+      path:'/home/goodsinfo/:id',
+      name:'goodsinfo',
+      component:GoodsInfo
     }
   ],
   linkActiveClass: 'mui-active'
